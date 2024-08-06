@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PostoDeGasolina.Models.Veiculo>
+
+@{
+    ViewData["Title"] = "Veículos";
+}
+
+<h2>Veículos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Adicionar Novo Veículo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Ano</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Modelo</td>
+                <td>@item.Marca</td>
+                <td>@item.Ano</td>
+            </tr>
+        }
+    </tbody>
+</table>

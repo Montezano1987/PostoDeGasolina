@@ -1,0 +1,32 @@
+﻿@model PostoDeGasolina.Models.Veiculo
+
+@{
+    ViewData["Title"] = "Criar Veículo";
+}
+
+<h2>Criar Veículo</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Modelo" class="control-label">Modelo</label>
+        <input asp-for="Modelo" class="form-control" />
+        <span asp-validation-for="Modelo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Marca" class="control-label">Marca</label>
+        <input asp-for="Marca" class="form-control" />
+        <span asp-validation-for="Marca" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ano" class="control-label">Ano</label>
+        <input asp-for="Ano" class="form-control" />
+        <span asp-validation-for="Ano" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Criar" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Voltar para a Lista</a>
+</div>

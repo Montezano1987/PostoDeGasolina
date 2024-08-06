@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Calculadora de Combustível";
+}
+
+<h2>Calculadora de Combustível</h2>
+
+<form asp-controller="Calculadora" asp-action="Calcular" method="post">
+    <div class="form-group">
+        <label for="precoGasolina">Preço da Gasolina</label>
+        <input type="number" id="precoGasolina" name="precoGasolina" step="0.01" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="precoAlcool">Preço do Álcool</label>
+        <input type="number" id="precoAlcool" name="precoAlcool" step="0.01" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Calcular" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a href="/">Voltar para o Início</a>
+</div>
