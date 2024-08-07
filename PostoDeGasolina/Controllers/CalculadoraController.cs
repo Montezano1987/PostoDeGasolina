@@ -17,6 +17,7 @@ namespace PostoDeGasolina.Controllers
 
             ViewBag.Resultado = resultado;
             return View("Index");
+
         }
     }
 }

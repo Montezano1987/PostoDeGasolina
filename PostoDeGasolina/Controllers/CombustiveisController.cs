@@ -35,8 +35,35 @@ namespace PostoDeGasolina.Controllers
                 _context.Add(combustivel);
                 await _context.SaveChangesAsync();
                 ViewBag.Message = "Combustível cadastrado com sucesso!";
+                return RedirectToAction("Index");
             }
             return View(combustivel);
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var combustivel = await _context.Combustiveis
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (combustivel == null)
+            {
+                return NotFound();
+            }
+
+            return View(combustivel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var combustivel = await _context.Combustiveis.FindAsync(id);
+            _context.Combustiveis.Remove(combustivel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

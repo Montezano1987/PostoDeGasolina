@@ -3,7 +3,6 @@ using PostoDeGasolina.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona o contexto do EF Core com a string de conexão
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

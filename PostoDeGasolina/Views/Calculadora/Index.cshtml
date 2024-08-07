@@ -18,6 +18,13 @@
     </div>
 </form>
 
+@if (ViewBag.Resultado != null)
+{
+    <div class="alert alert-info mt-3">
+        Combustível mais vantajoso: <strong>@ViewBag.Resultado</strong>
+    </div>
+}
+
 <div>
     <a href="/">Voltar para o Início</a>
 </div>

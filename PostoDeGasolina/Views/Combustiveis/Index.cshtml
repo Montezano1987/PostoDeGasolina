@@ -15,6 +15,7 @@
         <tr>
             <th>Nome</th>
             <th>Preço</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,7 +23,10 @@
         {
             <tr>
                 <td>@item.Nome</td>
-                <td>@item.Preco.ToString("C")</td>
+                <td>@item.Preco</td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                </td>
             </tr>
         }
     </tbody>
