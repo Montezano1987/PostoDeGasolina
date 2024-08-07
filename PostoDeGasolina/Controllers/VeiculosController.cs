@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PostoDeGasolina.Data;
+using PostoDeGasolina.Services.Interfaces;
 using PostoDeGasolina.Models;
+
 
 namespace PostoDeGasolina.Controllers
 {
     public class VeiculosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IVeiculosService _veiculosService;
 
-        public VeiculosController(ApplicationDbContext context)
+        public VeiculosController(IVeiculosService veiculosService)
         {
-            _context = context;
+            _veiculosService = veiculosService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var veiculos = await _context.Veiculos.ToListAsync();
+            var veiculos = await _veiculosService.BuscarVeiculos();
             return View(veiculos);
         }
 
@@ -31,39 +31,35 @@ namespace PostoDeGasolina.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(veiculo);
-                await _context.SaveChangesAsync();
+                await _veiculosService.CadastrarVeiculo(veiculo);
                 ViewBag.Message = "Veículo cadastrado com sucesso!";
                 return RedirectToAction("Index");
             }
             return View(veiculo);
         }
 
-		public async Task<IActionResult> Delete(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-			var veiculo = await _context.Veiculos
-				.FirstOrDefaultAsync(v => v.Id == id);
-			if (veiculo == null)
-			{
-				return NotFound();
-			}
+            var veiculo = await _veiculosService.BuscarVeiculoPorId(id.Value);
+            if (veiculo == null)
+            {
+                return NotFound();
+            }
 
-			return View(veiculo);
-		}
+            return View(veiculo);
+        }
 
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
-			var veiculo = await _context.Veiculos.FindAsync(id);
-			_context.Veiculos.Remove(veiculo);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
-		}
-	}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _veiculosService.RemoverVeiculo(id);
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

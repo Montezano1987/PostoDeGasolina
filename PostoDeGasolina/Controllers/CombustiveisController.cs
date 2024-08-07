@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PostoDeGasolina.Data;
+using PostoDeGasolina.Services.Interfaces;
 using PostoDeGasolina.Models;
-using System.Threading.Tasks;
 
 namespace PostoDeGasolina.Controllers
 {
     public class CombustiveisController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICombustiveisService _combustiveisService;
 
-        public CombustiveisController(ApplicationDbContext context)
+        public CombustiveisController(ICombustiveisService combustiveisService)
         {
-            _context = context;
+            _combustiveisService = combustiveisService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var combustiveis = await _context.Combustiveis.ToListAsync();
+            var combustiveis = await _combustiveisService.BuscarCombustiveis();
             return View(combustiveis);
         }
 
@@ -32,13 +30,13 @@ namespace PostoDeGasolina.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(combustivel);
-                await _context.SaveChangesAsync();
+                await _combustiveisService.CadastrarCombustivel(combustivel);
                 ViewBag.Message = "Combustível cadastrado com sucesso!";
                 return RedirectToAction("Index");
             }
             return View(combustivel);
         }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -46,8 +44,7 @@ namespace PostoDeGasolina.Controllers
                 return NotFound();
             }
 
-            var combustivel = await _context.Combustiveis
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var combustivel = await _combustiveisService.BuscarCombustivelPorId(id.Value);
             if (combustivel == null)
             {
                 return NotFound();
@@ -60,9 +57,7 @@ namespace PostoDeGasolina.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var combustivel = await _context.Combustiveis.FindAsync(id);
-            _context.Combustiveis.Remove(combustivel);
-            await _context.SaveChangesAsync();
+            await _combustiveisService.RemoverCombustivel(id);
             return RedirectToAction(nameof(Index));
         }
     }
