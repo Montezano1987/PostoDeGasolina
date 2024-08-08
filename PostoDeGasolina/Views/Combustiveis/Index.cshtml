@@ -13,19 +13,21 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nome</th>
             <th>Preço</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var combustivel in Model)
         {
             <tr>
-                <td>@item.Nome</td>
-                <td>@item.Preco</td>
+                <td>@combustivel.Id</td>
+                <td>@combustivel.Nome</td>
+                <td>@combustivel.Preco</td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                    <a asp-action="Delete" asp-route-id="@combustivel.Id" class="btn btn-danger">Deletar</a>
                 </td>
             </tr>
         }
