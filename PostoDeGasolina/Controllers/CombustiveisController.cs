@@ -39,10 +39,6 @@ namespace PostoDeGasolina.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var combustivel = await _combustiveisService.BuscarCombustivelPorId(id.Value);
             if (combustivel == null)
@@ -60,5 +56,6 @@ namespace PostoDeGasolina.Controllers
             await _combustiveisService.RemoverCombustivel(id);
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

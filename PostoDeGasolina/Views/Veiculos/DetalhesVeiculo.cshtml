@@ -1,0 +1,16 @@
+﻿@model PostoDeGasolina.Models.Veiculo
+
+@{
+    ViewData["Title"] = "Detalhes do Veículo";
+}
+
+<h2>Detalhes do Veículo</h2>
+
+<p>Id: @Model.Id</p>
+<p>Modelo: @Model.Modelo</p>
+<p>Marca: @Model.Marca</p>
+<p>Ano: @Model.Ano</p>
+
+<div>
+    <a asp-action="Index">Voltar à lista de veículos</a>
+</div>

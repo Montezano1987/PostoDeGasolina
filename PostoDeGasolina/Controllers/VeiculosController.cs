@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PostoDeGasolina.Services.Interfaces;
 using PostoDeGasolina.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace PostoDeGasolina.Controllers
@@ -12,6 +13,7 @@ namespace PostoDeGasolina.Controllers
         public VeiculosController(IVeiculosService veiculosService)
         {
             _veiculosService = veiculosService;
+            
         }
 
         public async Task<IActionResult> Index()
@@ -38,13 +40,29 @@ namespace PostoDeGasolina.Controllers
             return View(veiculo);
         }
 
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		public IActionResult BuscarVeiculoPorId()
+		{
+			return View();
+		}
 
+		[HttpPost]
+		public async Task<IActionResult> BuscarVeiculoPorId(int id)
+		{
+			
+			var veiculo = await _veiculosService.BuscarVeiculoPorId(id);
+
+			if (veiculo == null)
+			{
+				ViewBag.Message = "Veículo não encontrado.";
+				return View();
+			}
+
+			return View("DetalhesVeiculo", veiculo);
+		}
+
+		public async Task<IActionResult> Delete(int? id)
+        {
+      
             var veiculo = await _veiculosService.BuscarVeiculoPorId(id.Value);
             if (veiculo == null)
             {
